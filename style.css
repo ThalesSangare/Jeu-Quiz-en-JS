@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(#140a46, #c03840, #140a46);
+}
+
+.container {
+  width: 70%;
+  margin: 40px auto;
+  padding: 20px;
+  color: white;
+  border-radius: 12px;
+}
+
+.question {
+  border: 2px solid black;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.question h4 {
+  margin-bottom: 15px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
