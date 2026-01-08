@@ -1,37 +1,92 @@
+/* Reset basique */
 * {
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
+/* Fond dégradé full page */
 body {
-  background: linear-gradient(rgb(7, 20, 57) );
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* Carte principale du quiz */
 .container {
   width: 70%;
-  margin: 40px auto;
-  padding: 20px;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.08); /* effet glass */
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 15px;
   color: white;
-  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
+/* Bloc question */
 .question {
-  border: 2px solid black;
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
   padding: 20px;
-  margin-bottom: 20px;
 }
 
+/* Titre de la question */
 .question h4 {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
 }
 
+/* Liste des réponses */
 ul {
   list-style: none;
   padding: 0;
 }
 
+/* Chaque réponse */
 li {
-  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 12px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
+/* Effet au survol */
+li:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Boutons radio */
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+/* Bouton suivant / recommencer */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #00c6ff;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Effet bouton */
+button:hover {
+  background: #0072ff;
+  color: white;
+}
+
+/* Texte du score */
+#score {
+  margin-top: 15px;
+  font-size: 1.1rem;
+  text-align: center;
+}
