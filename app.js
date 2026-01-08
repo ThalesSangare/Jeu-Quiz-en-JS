@@ -1,169 +1,106 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".container");
-
-  // ============================
-  // DONNÉES : BONNES RÉPONSES
-  // L'ordre correspond aux questions
-  // ============================
-  const bonnesReponses = [
-    "Thales",
-    "Librairie",
-    "Steve Jobs",
-    "Ancien president",
-    "Developpeur"
+  //========================================
+  //CREATION DES QUESTIONS
+  //=========================================
+  const questions = [
+    {
+      question: "Qui est le PDG de Apple ?",
+      reponses: ["Thales", "Steve Jobs", "Bill Gates"],
+      bonne: "Steve Jobs",
+    },
+    {
+      question: "Qui est le futur grand dev ?",
+      reponses: ["Thales", "Hawa", "Myriam"],
+      bonne: "Thales",
+    },
+    {
+      question: "React est un ?",
+      reponses: ["Framework", "Librairie", "Langage"],
+      bonne: "Librairie",
+    },
   ];
 
-  // ============================
-  // Fonction pour créer une question
-  // ============================
-  function creerQuestion(titre, reponses,indexQuestion) {
-    const questionDiv = document.createElement("div");
-    questionDiv.classList.add("question");
+  // LES VARIABLES
+  let indexQuestion = 0;
+  let score = 0;
 
-    const h4 = document.createElement("h4");
-    h4.textContent = titre;
+  const container = document.querySelector(".container");
+  const questionEl = document.getElementById("question");
+  const reponsesEl = document.getElementById("reponses");
+  const btnSuivant = document.getElementById("btn");
+  const scoreEl = document.getElementById("score");
 
-    const ul = document.createElement("ul");
+   
 
-    // Parcours chaque reponse et fais ça pour chacun d'eux
-    reponses.forEach((reponse) => {
+  //=======================
+  //FONCTION AFFICHAGE DES QUESTION
+  //================================
+  function afficherQuestion() {
+    const q = questions[indexQuestion];
+
+    questionEl.textContent = q.question;
+    reponsesEl.innerHTML = "";
+
+    q.reponses.forEach((rep) => {
       const li = document.createElement("li");
 
       const checkbox = document.createElement("input");
-      checkbox.type = "radio"; // radio = 1 seul choix
-      checkbox.name = "question" + indexQuestion; // pour regroupe selon le titre
-      checkbox.value = reponse;
-
-      const label = document.createElement("label");
-      label.textContent = " " + reponse;
+      checkbox.type = "radio";
+      checkbox.name = "reponse";
+      checkbox.value = rep;
 
       li.appendChild(checkbox);
-      li.appendChild(label);
-      ul.appendChild(li);
-    });
-    questionDiv.appendChild(h4);
-    questionDiv.appendChild(ul);
+      li.append(" " + rep);
 
-    container.appendChild(questionDiv);
+      reponsesEl.appendChild(li);
+    });
   }
 
-  // fonction gerer les responses
- 
+  //=======================
+  //BOUTON SUIVANT
+  //================================
+  btnSuivant.addEventListener("click", () => {
+    const choix = document.querySelector('input[name="reponse"]:checked');
 
-  // ============================
-  // QUESTIONS
-  // ============================
+    if (!choix) {
+      alert("Choisis une réponse");
+      return;
+    }
 
-creerQuestion("Qui est le futur grand dev ?", [
-    "Thales", 
-    "hawa", 
-    "myriam"
-    ],0
-  );
+    if (choix.value === questions[indexQuestion].bonne) {
+      score++;
+    }
+    indexQuestion++;
 
-creerQuestion("React est t-il un ?", [
-    "framework", 
-    "Librairie", 
-    "Langage"],1);
+    if (indexQuestion < questions.length) {
+      afficherQuestion();
+    } else {
+      questionEl.textContent = "Quiz terminé";
+      reponsesEl.innerHTML = "";
+      btnSuivant.style.display = "none";
+      scoreEl.textContent = `Ton score : ${score} / ${questions.length}`;
+      
+     
+      const btnReprendre = document.createElement('button');
+      btnReprendre.textContent = 'Recommencer la partie';
+      container.appendChild(btnReprendre);
+      btnReprendre.addEventListener('click', () =>{
 
-creerQuestion("Qui est le Fondateur de Apple ?", [
-    "Steve Jobs",
-    "Barack Obama",
-    "Bill Gates",
-  ],2);
-creerQuestion("Qui est Nelson Mandela ?", [
-    "Ancien president",
-    "Acteur",
-    "Musicien"
-],3);
-creerQuestion("Qui suis-je ?", [
-    "Developpeur", 
-    "ecrivain", 
-    "medecin"],4);
+        // reset le jeu
+        indexQuestion = 0;
+        score = 0;
 
+        scoreEl.textContent = "";
+        btnSuivant.style.display = "block";
+        btnReprendre.remove();
 
-     // ============================
-  // BOUTON SOUMETTRE
-  // ============================
-  const btnSubmit = document.createElement("button");
-  btnSubmit.textContent = "Soumettre";
-  btnSubmit.style.marginTop = "20px";
+        //relance le jeu
+        // console.log('tout est bon');
+        afficherQuestion();
+        
+      });
+    }
+  });
 
-  container.appendChild(btnSubmit);
-
-
-  // ============================
-  // GESTION DES RÉPONSES
-  // ============================
-  // btnSubmit.addEventListener("click", () => {
-  //   let score = 0;
-
-  //   // On parcourt chaque bonne réponse
-  //   bonnesReponses.forEach((bonneReponse, index) => {
-
-  //     // On récupère la réponse cochée pour cette question
-  //     const choix = document.querySelector(
-  //       `input[name="question${index}"]:checked`
-  //     );
-
-  //     // Si l'utilisateur a répondu
-  //     if (choix) {
-  //       // Comparaison simple
-  //       if (choix.value === bonneReponse) {
-  //         questionDiv.style.backgroundColor = "green";
-  //         score++;
-  //       }
-  //     }
-  //   });
-
-  //   if(score === 5){
-  //     alert('Felicitation ! ton score est : ' + score + " / " + bonnesReponses.length);
-  //   }else{
-  //         alert("Ton score est : " + score + " / " + bonnesReponses.length);
-
-  //   }
-  // });
-
-
-  btnSubmit.addEventListener("click", () => {
-    let score = 0;
-
-    bonnesReponses.forEach((bonneReponse, index) => {
-        const choix = document.querySelector(
-            `input[name="question${index}"]:checked`
-        );
-
-        // On récupère tous les <li> de cette question
-        const liList = document.querySelectorAll(
-            `input[name="question${index}"]`
-        );
-
-        liList.forEach((radio) => {
-            const li = radio.parentElement; // le <li> qui contient le radio
-
-            // Supprime les anciennes classes
-            li.classList.remove("bonne", "mauvaise");
-
-            if (radio.value === bonneReponse) {
-                // La bonne réponse devient verte
-                li.classList.add("bonne");
-            } 
-            
-            if (choix && radio.value === choix.value && choix.value !== bonneReponse) {
-                // Si l'utilisateur a choisi une mauvaise réponse, rouge
-                li.classList.add("mauvaise");
-            }
-        });
-
-        // Score
-        if (choix && choix.value === bonneReponse) {
-            score++;
-        }
-    });
-
-    alert(`Ton score est : ${score} / ${bonnesReponses.length}`);
-});
-
-
-
+  afficherQuestion();
 });
