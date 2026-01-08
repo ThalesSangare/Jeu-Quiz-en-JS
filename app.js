@@ -30,7 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnSuivant = document.getElementById("btn");
   const scoreEl = document.getElementById("score");
 
-   
+  const btnReprendre = document.createElement("button");
+  btnReprendre.textContent = "Recommencer la partie";
 
   //=======================
   //FONCTION AFFICHAGE DES QUESTION
@@ -57,6 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //=======================
+  //FUNCTION POUR RECOMMENCER LE JEU A LA FIN
+  //================================
+
+  function resetQuiz() {
+    indexQuestion = 0;
+    score = 0;
+    scoreEl.textContent = "";
+    btnSuivant.style.display = "block";
+    btnReprendre.remove();
+    afficherQuestion();
+  }
+
+  //=======================
   //BOUTON SUIVANT
   //================================
   btnSuivant.addEventListener("click", () => {
@@ -78,27 +92,17 @@ document.addEventListener("DOMContentLoaded", () => {
       questionEl.textContent = "Quiz terminé";
       reponsesEl.innerHTML = "";
       btnSuivant.style.display = "none";
-      scoreEl.textContent = `Ton score : ${score} / ${questions.length}`;
+      if (score === questions.length) {
+        scoreEl.innerHTML = `
+        Bravo ! Tu as tout trouvé :) <br>
+        Ton score : ${score} / ${questions.length} `;
+      }else{
+        scoreEl.textContent = `Ton score : ${score} / ${questions.length}`;
+      }
       
-     
-      const btnReprendre = document.createElement('button');
-      btnReprendre.textContent = 'Recommencer la partie';
+
       container.appendChild(btnReprendre);
-      btnReprendre.addEventListener('click', () =>{
-
-        // reset le jeu
-        indexQuestion = 0;
-        score = 0;
-
-        scoreEl.textContent = "";
-        btnSuivant.style.display = "block";
-        btnReprendre.remove();
-
-        //relance le jeu
-        // console.log('tout est bon');
-        afficherQuestion();
-        
-      });
+      btnReprendre.addEventListener("click", resetQuiz);
     }
   });
 
