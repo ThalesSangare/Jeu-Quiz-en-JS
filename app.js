@@ -95,38 +95,74 @@ creerQuestion("Qui suis-je ?", [
   // ============================
   // GESTION DES RÉPONSES
   // ============================
+  // btnSubmit.addEventListener("click", () => {
+  //   let score = 0;
+
+  //   // On parcourt chaque bonne réponse
+  //   bonnesReponses.forEach((bonneReponse, index) => {
+
+  //     // On récupère la réponse cochée pour cette question
+  //     const choix = document.querySelector(
+  //       `input[name="question${index}"]:checked`
+  //     );
+
+  //     // Si l'utilisateur a répondu
+  //     if (choix) {
+  //       // Comparaison simple
+  //       if (choix.value === bonneReponse) {
+  //         questionDiv.style.backgroundColor = "green";
+  //         score++;
+  //       }
+  //     }
+  //   });
+
+  //   if(score === 5){
+  //     alert('Felicitation ! ton score est : ' + score + " / " + bonnesReponses.length);
+  //   }else{
+  //         alert("Ton score est : " + score + " / " + bonnesReponses.length);
+
+  //   }
+  // });
+
+
   btnSubmit.addEventListener("click", () => {
     let score = 0;
 
-    // On parcourt chaque bonne réponse
     bonnesReponses.forEach((bonneReponse, index) => {
+        const choix = document.querySelector(
+            `input[name="question${index}"]:checked`
+        );
 
-      // On récupère la réponse cochée pour cette question
-      const choix = document.querySelector(
-        `input[name="question${index}"]:checked`
-      );
+        // On récupère tous les <li> de cette question
+        const liList = document.querySelectorAll(
+            `input[name="question${index}"]`
+        );
 
-      // Si l'utilisateur a répondu
-      if (choix) {
-        // Comparaison simple
-        if (choix.value === bonneReponse) {
-          score++;
+        liList.forEach((radio) => {
+            const li = radio.parentElement; // le <li> qui contient le radio
+
+            // Supprime les anciennes classes
+            li.classList.remove("bonne", "mauvaise");
+
+            if (radio.value === bonneReponse) {
+                // La bonne réponse devient verte
+                li.classList.add("bonne");
+            } 
+            
+            if (choix && radio.value === choix.value && choix.value !== bonneReponse) {
+                // Si l'utilisateur a choisi une mauvaise réponse, rouge
+                li.classList.add("mauvaise");
+            }
+        });
+
+        // Score
+        if (choix && choix.value === bonneReponse) {
+            score++;
         }
-      }
     });
 
-    if(score === 5){
-      alert('Felicitation ! ton score est : ' + score + " / " + bonnesReponses.length);
-    }else{
-          alert("Ton score est : " + score + " / " + bonnesReponses.length);
-
-    }
-  });
-
-
-
-
-
+    alert(`Ton score est : ${score} / ${bonnesReponses.length}`);
+});
 
 
 

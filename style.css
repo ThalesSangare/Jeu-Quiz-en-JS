@@ -4,7 +4,7 @@
 }
 
 body {
-  background: linear-gradient(#140a46, #c03840, #140a46);
+  background: linear-gradient(rgb(7, 20, 57) );
 }
 
 .container {
@@ -17,6 +17,7 @@ body {
 
 .question {
   border: 2px solid black;
+  border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
 }
@@ -32,4 +33,13 @@ ul {
 
 li {
   margin-bottom: 10px;
+}
+
+
+.bonne {
+    background-color: #c8e6c9; /* vert clair */
+}
+
+.mauvaise {
+    background-color: #ffcdd2; /* rouge clair */
 }
